@@ -1,5 +1,7 @@
 package visitor;
 
+import java.util.Iterator;
+
 public class Main {
 	public static void main(String[] args) {
 		try {
@@ -26,9 +28,20 @@ public class Main {
 			yuki.add(new File("diary.html", 100));
 			yuki.add(new File("Composite.java", 200));
 			hanako.add(new File("memo.tex", 300));
+			hanako.add(new File("index.html", 200));
 			tomura.add(new File("game.doc", 400));
 			tomura.add(new File("junk.mail", 500));
 			rootDir.accept(new ListVisitor());
+
+			System.out.println();
+			FileFinderVisitor ffv = new FileFinderVisitor(".html");
+			rootDir.accept(ffv);
+			System.out.println("HTML files are:");
+			Iterator<File> it = ffv.getFoundFile();
+			while (it.hasNext()) {
+				File file = (File) it.next();
+				System.out.println(file);
+			}
 		} catch (FileThreatmentException e) {
 			e.printStackTrace();
 		}
