@@ -19,13 +19,9 @@ public class Directory extends Entry{
 
 	@Override
 	public int getSize() {
-		int size = 0;
-		Iterator<Entry> it = directory.iterator();
-		while (it.hasNext()) {
-			Entry entry = (Entry) it.next();
-			size += entry.getSize();
-		}
-		return size;
+		SizeVisitor sv = new SizeVisitor();
+		accept(sv);
+		return sv.getSize();
 	}
 
 	public Entry add(Entry entry) {
